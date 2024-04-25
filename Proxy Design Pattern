@@ -1,0 +1,56 @@
+import java.util.List;
+
+interface Document {
+    String getContent();
+    String getMetadata();
+}
+
+class RealDocument implements Document {
+    private String content;
+    private String metadata;
+
+    public RealDocument(String content, String metadata) {
+        this.content = content;
+        this.metadata = metadata;
+    }
+
+    @Override
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public String getMetadata() {
+        return metadata;
+    }
+}
+
+class DocumentProxy implements Document {
+    private RealDocument document;
+
+    public DocumentProxy(String content, String metadata) {
+        this.document = new RealDocument(content, metadata);
+    }
+
+    @Override
+    public String getContent() {
+        return document.getContent();
+    }
+
+    @Override
+    public String getMetadata() {
+        return document.getMetadata();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Document document = new DocumentProxy("Document content", "Document metadata");
+
+        String content = document.getContent();
+        String metadata = document.getMetadata();
+
+        System.out.println("Content: " + content);
+        System.out.println("Metadata: " + metadata);
+    }
+}
